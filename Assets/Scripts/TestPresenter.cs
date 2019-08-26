@@ -1,14 +1,20 @@
-﻿using UniRx;
+﻿using System;
+using UniRx;
+using UnityEngine;
 
-public class TestPresenter {
-    private ITestHPView _testHPView;
-    private ITestHPModel _testHPModel;
+public class TestPresenter : IDisposable {
+    private IDisposable hpSubscribe;
+    private IDisposable onDamageSubscribe;
     public TestPresenter (ITestHPView testHPView, ITestHPModel testHPModel) {
-        _testHPView = testHPView;
-        _testHPModel = testHPModel;
-        _testHPModel.HP.Subscribe (_testHPView.DisplayHP);
-        _testHPView.OnDamage.Subscribe (
-            _ => _testHPModel.Damage (20)
+        hpSubscribe = testHPModel.HP.Subscribe (testHPView.DisplayHP);
+        onDamageSubscribe = testHPView.OnDamage.Subscribe (
+            _ => testHPModel.Damage (20)
         );
+    }
+
+    public void Dispose () {
+        Debug.Log ("Call Presenter Dispose()");
+        hpSubscribe.Dispose ();
+        onDamageSubscribe.Dispose ();
     }
 }

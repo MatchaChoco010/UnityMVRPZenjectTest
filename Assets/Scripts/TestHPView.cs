@@ -11,6 +11,7 @@ public class TestHPView : MonoBehaviour, ITestHPView {
     public IObservable<Unit> OnDamage => button.OnClickAsObservable ();
 
     public void DisplayHP (int hp) {
+        Debug.Log (hp);
         text.text = hp.ToString ();
     }
 }

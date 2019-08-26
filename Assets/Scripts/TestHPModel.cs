@@ -1,5 +1,4 @@
 ﻿using UniRx;
-using UnityEngine;
 
 public class TestHPModel : ITestHPModel {
     private IntReactiveProperty _hp = new IntReactiveProperty (100);
@@ -12,7 +11,6 @@ public class TestHPModel : ITestHPModel {
             _hp.Value = 0;
         } else {
             _hp.Value = tmp;
-            Debug.Log (tmp);
         }
     }
 }
